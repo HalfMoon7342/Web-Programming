@@ -10,15 +10,25 @@
 <body class="bg-primary">
     <div class="col-12 mt-4 d-flex justify-content-center">
         <form class="col-12 col-md-6 card">
-            <div>
-                <input id="txtUsername" class="form-control mt-2" placeholder="user@email.com" type="email" />
-                <input id="txtPassword" class="form-control mt-2" placeholder="password" type="password" />
-                <button id="btnLogin" class="btn btn-primary mt-3">Login</button>
-                <button id="btnForgotPassword" class="btn btn-secondary mt-2 ml-1 mr-1">Forgot Password?</button>
-            </div>
+            <input id="txtUsername" class="form-control mt-2" placeholder="user@email.com" type="email" />
+            <input id="txtPassword" class="form-control mt-2" placeholder="password" type="password" />
+            <button id="btnLogin" type="button" class="btn btn-primary mt-3">Login</button>
+            <button id="btnForgotPassword" type="button" class="btn btn-secondary mt-2 ml-1 mr-1">Forgot Password?</button>
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script>
+        $(document).on('click', '#btnLogin', function() {
+            let strUsername = $('#txtUsername').val();
+            let strPassword = $('#txtPassword').val();
+            console.log('My Username is ' + strUsername);
+            console.log('My Password is ' + strPassword);
+            console.log('Clicked my Login Button');
+        })
+        $(document).on('click', '#btnForgotPassword', function() {
+            console.log('Clicked my Forgot Password Button');
+        })
+    </script>
 </body>
 </html>
