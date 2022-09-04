@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/lib/bootstrap.min.css">
+</head>
+<body class="d-flex justify-content-center align-items-center vh-100 bg-primary">
+    <div class="card col-12 col-md-8">
+        <div class="card-header">
+            <h3 id="txtOrgName">Org Name</h3>
+        </div>
+        <div class="card-body">
+            <div class="d-flex">
+                <div class="col-4">
+                    <img id="imgProfile" src="images/hippo.png" alt="logo">
+                </div>
+
+                <div class="col-8">
+                    <div class="d-flex justify-content-center">
+                        <h3 id="txtFirstName">First Name</h3>
+                        <h3 id="txtLastName">Last Name</h3>
+                    </div>
+                    <h4 id="txtJob" class="col-12 text-center">Job</h4>
+                </div>
+
+            </div>
+
+            <div class="d-flex">
+                <div class="col-6">
+                    <p id="txtStreetAddress">Street Address</p>
+                    <p id="txtCity">City</p>
+                    <p id="txtState">State</p>
+                    <p id="txtZIP">ZIP</p>
+                </div>
+                <div class="col-6">
+                    <p id="txtPhoneNumber">Phone Number</p>
+                    <p id="txtHireDate">Hire Date</p>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script src="js/lib/jquery-3.6.0.min.js"></script>
+    <script src="js/lib/bootstrap.bundle.min.js"></script>
+    <script>
+        var objCharacter;
+        $.getJSON('https://swollenhippo.com/getProfileDetailsByAPIKey.php',
+            {APIKey: 'DuffManSays,Phrasing!',Codename: 'Duchess'},
+            (result) => {
+                objCharacter = result;
+                console.log(objCharacter);
+                $("#txtOrgName").txt(objCharacter.Agency);
+                $("#txtFirstName").txt(objCharacter.FirstName);
+                $("#txtLastName").txt(objCharacter.LastName);
+                $("#txtStreetAddress").txt(objCharacter.Street1);
+                $("#txtCity").txt(objCharacter.City);
+                $("#txtState").txt(objCharacter.State);
+                $("#txtZIP").txt(objCharacter.ZIP);
+                $("#txtPhoneNumber").txt(objCharacter.Phone);
+                $("#txtHireDate").txt(objCharacter.HireDate);
+                $("#txtJob").txt(objCharacter.Job);
+                $('#imgProfile').attr('src',objCharacter.Image);
+                $('#imgProfile').attr('alt',objCharacter.FirstName + ' ' + objCharacter.LastName + ' Profile Image');
+            });
+    </script>
+</body>
+</html>
