@@ -4,68 +4,110 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Profile</title>
     <link rel="stylesheet" href="css/lib/bootstrap.min.css">
 </head>
-<body class="d-flex justify-content-center align-items-center vh-100 bg-primary">
-    <div class="card col-12 col-md-8">
-        <div class="card-header">
-            <h3 id="txtOrgName">Org Name</h3>
-        </div>
-        <div class="card-body">
-            <div class="d-flex">
-                <div class="col-4">
-                    <img id="imgProfile" src="images/hippo.png" alt="logo">
-                </div>
 
-                <div class="col-8">
+<body class="bg-primary container">
+    <div class="col-12">
+        <form class="mt-5">
+            <select id="txtCharacterSelect" class="form-control" aria-label="Select Character"></select>
+            <button id="btnFindCharacter" type="button" class="btn btn-warning">Find</button>
+        </form>
+    </div>
+    
+    <div class="d-flex justify-content-center align-items-center vh-100 bg-primary container mt-5">
+        <div id="divProfileCard" class="card col-12 col-md-4 col-lg-3 d-none">
+            <div class="card-body">
+                <div class="col-12 d-flex justify-content-center">
+                    <img id="imgProfile" src="#" alt="logo" class="rounded-circle mw-100">
+                </div>
+                
+                <div class="col-12">
                     <div class="d-flex justify-content-center">
-                        <h3 id="txtFirstName">First Name</h3>
-                        <h3 id="txtLastName">Last Name</h3>
+                        <h1 id="txtFirstName" class="mb-0"><span class="text-bold"></span></h1>
                     </div>
-                    <h4 id="txtJob" class="col-12 text-center">Job</h4>
+                </div>
+                <div class="col-12 mt-0">
+                    <div class="d-flex justify-content-center">
+                        <h3 class="mb-0"><span id="txtLastName"></span></h3>
+                    </div>
+                    <p id="txtJob" class="col-12 text-center"></p>
                 </div>
 
-            </div>
+                <div class="mt-5">
+                    <h4>Address</h4>
+                    <p id="txtStreetAddress" class="mt-0 mb-0">Street Address</p>
+                    <p><span id="txtCity" class="mt-0 mb-0"></span>, <span id="txtState" class="mt-0 mb-0"></span> <span id="txtZIP" class="mt-0 mb-0"></span></p>
 
-            <div class="d-flex">
-                <div class="col-6">
-                    <p id="txtStreetAddress">Street Address</p>
-                    <p id="txtCity">City</p>
-                    <p id="txtState">State</p>
-                    <p id="txtZIP">ZIP</p>
-                </div>
-                <div class="col-6">
+                    <h4>Phone</h4>
                     <p id="txtPhoneNumber">Phone Number</p>
-                    <p id="txtHireDate">Hire Date</p>
+
+                    <h4>Hire Date</h4>
+                    <p if="txtHireDate">Hire Date</p>
                 </div>
             </div>
-
-
         </div>
     </div>
+    
     <script src="js/lib/jquery-3.6.0.min.js"></script>
     <script src="js/lib/bootstrap.bundle.min.js"></script>
     <script>
+        $.getJSON('https://swollenhippo.com/getCharactersByAPIKey.php?APIKey=Mickey2022!',
+        (result) => {
+            console.table(result);
+            let arrCharacters = result;
+            arrCharacters.forEach(function(character) {
+                console.log(character);
+                $('#txtCharacterSelect').append('<option value="' + character.CodeName + '">' + character.FirstName + ' ' + character.LastName + '</option>');
+            });
+        })
+
+        $('#btnFindCharacter').on('click', function(){
+            let strCodename = $('#txtCharacterSelect option:selected').val();
+            var objCharacter;
+            $.getJSON('https://swollenhippo.com/getProfileDetailsByAPIKey.php', 
+                {APIKey: 'Mickey2022!',Codename: strCodename}, 
+                (result) => {
+                    objCharacter= result;
+                    $('#divProfileCard').removeClass('d-none');
+                    console.log(objCharacter);
+                    $('#txtOrgName').text(objCharacter.Agency);
+                    $('#txtFirstName').text(objCharacter.FirstName);
+                    $('#txtLastName').text(objCharacter.LastName);
+                    $('#txtStreetAddress').text(objCharacter.Street1);
+                    $('#txtCity').text(objCharacter.City);
+                    $('#txtState').text(objCharacter.State);
+                    $('#txtZIP').text(objCharacter.ZIP);
+                    $('#txtPhoneNumber').text(objCharacter.Phone);
+                    $('#txtHireDate').text(objCharacter.HireDate);
+                    $('#txtJob').text(objCharacter.Job);
+                    $('#imgProfile').attr('src',objCharacter.Image);
+                    $('#imgProfile').attr('alt',objCharacter.FirstName + ' ' + objCharacter.LastName + ' Profile Image');
+            });
+        })
+
+        /*
         var objCharacter;
-        $.getJSON('https://swollenhippo.com/getProfileDetailsByAPIKey.php',
-            {APIKey: 'DuffManSays,Phrasing!',Codename: 'Duchess'},
+        $.getJSON('https://swollenhippo.com/getProfileDetailsByAPIKey.php', 
+            {APIKey: 'DuffManSays,Phrasing!',Codename: 'Duchess'}, 
             (result) => {
-                objCharacter = result;
+                objCharacter= result;
                 console.log(objCharacter);
-                $("#txtOrgName").txt(objCharacter.Agency);
-                $("#txtFirstName").txt(objCharacter.FirstName);
-                $("#txtLastName").txt(objCharacter.LastName);
-                $("#txtStreetAddress").txt(objCharacter.Street1);
-                $("#txtCity").txt(objCharacter.City);
-                $("#txtState").txt(objCharacter.State);
-                $("#txtZIP").txt(objCharacter.ZIP);
-                $("#txtPhoneNumber").txt(objCharacter.Phone);
-                $("#txtHireDate").txt(objCharacter.HireDate);
-                $("#txtJob").txt(objCharacter.Job);
+                $('#txtOrgName').text(objCharacter.Agency);
+                $('#txtFirstName').text(objCharacter.FirstName);
+                $('#txtLastName').text(objCharacter.LastName);
+                $('#txtStreetAddress').text(objCharacter.Street1);
+                $('#txtCity').text(objCharacter.City);
+                $('#txtState').text(objCharacter.State);
+                $('#txtZIP').text(objCharacter.ZIP);
+                $('#txtPhoneNumber').text(objCharacter.Phone);
+                $('#txtHireDate').text(objCharacter.HireDate);
+                $('#txtJob').text(objCharacter.Job);
                 $('#imgProfile').attr('src',objCharacter.Image);
                 $('#imgProfile').attr('alt',objCharacter.FirstName + ' ' + objCharacter.LastName + ' Profile Image');
-            });
+        });
+        */
     </script>
 </body>
 </html>
