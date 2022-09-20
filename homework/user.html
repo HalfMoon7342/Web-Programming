@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New User</title>
+    <link rel="stylesheet" href="css/lib/bootstrap.min.css">
+</head>
+
+<body class="bg-primary vh-100">
+    <div class="card col-6 offset-3 mt-5">
+        <div class="card-header">
+            <h3>Create New Account</h3>
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="">
+                    <input id="txtEmail" class="form-control" type="email" aria-label="Enter Email Address" placeholder="Email Address" required>
+                    <div class="invalid-feedback">You Must Enter an Email</div>
+                </div>
+                <div class="">
+                    <input id="txtFirstName" class="form-control" type="text" aria-label="First Name" placeholder="First Name" required>
+                    <div class="invalid-feedback">You Must Enter Your First Name</div>
+                </div>
+                <div class="">
+                    <input id="txtLastName" class="form-control" type="text" aria-label="Last Name" placeholder="Last Name" required>
+                    <div class="invalid-feedback">You Must Enter Your Last Name</div>
+                </div>
+                <div class="">
+                    <input id="txtPassword" class="form-control" type="password" aria-label="Enter Password" placeholder="Password" required>
+                    <div class="invalid-feedback">You Must Enter a Password</div>
+                </div>
+                <button id="btnCreate" class="btn btn-primary mt-4 col-12" type="button">Create User</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="js/lib/jquery-3.6.1.min.js"></script>
+    <script src="js/lib/bootstrap.bundle.min.js"></script>
+    <script src="js/lib/sweetalert2.js"></script>
+    <script>
+        $('#btnCreate').on('click', function() {
+            let strEmail = $('#txtEmail').val();
+            let strFirstName = $('#txtFirstName').val();
+            let strLastName = $('#txtLastName').val();
+            let strPassword = $('#txtPassword').val();
+            let blnError = false;
+            let strErrorMessage = '';
+
+            if(!strEmail) {
+                blnError = true;
+                $('txtEmail').addClass('is-invalid');
+            }
+            if(!strFirstName) {
+                blnError = true;
+                $('txtFirstName').addClass('is-invalid');
+            }
+            if(!strLastName) {
+                blnError = true;
+                $('txtLastName').addClass('is-invalid');
+            }
+            if(!strPassword) {
+                blnError = true;
+                $('txtPassword').addClass('is-invalid');
+            }
+            
+            if(blnError == false) {
+                $.post('https://www.swollenhippo.com/ReliableVehicles/api/users.php', {email:strEmail, firstName:strFirstName, lastName:strLastName, password:strPassword}).done(function(result) {
+                    console.log(result);
+                    objResult = JSON.parse(result);
+                    console.log(objResult);
+                    if(!objResult.Outcome) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: objResult.Error
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Awesome',
+                            text: objResult.Outcome
+                        })
+                    }
+                })
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New User</title>
+    <link rel="stylesheet" href="css/lib/bootstrap.min.css">
+</head>
+
+<body class="bg-primary vh-100">
+    <button id="btnLogout" class="btn btn-warning col-12 mt-3" type="button">Logout</button>
+    <div id="divLogin" class="card col-6 offset-3 mt-5">
+        <div class="card-header">
+            <h3>Create New Account</h3>
+        </div>
+        <div class="card-body">
+            <form class="must-validate">
+                <div class="">
+                    <input id="txtEmail" class="form-control" type="email" aria-label="Enter Email Address" placeholder="Email Address" required>
+                    <div class="invalid-feedback">You Must Enter an Email</div>
+                </div>
+                <div class="">
+                    <input id="txtPassword" class="form-control mt-3" type="password" aria-label="Enter Password" placeholder="Password" required>
+                    <div class="invalid-feedback">You Must Enter a Password</div>
+                </div>
+                <button id="btnLogin" class="btn btn-primary mt-4 col-12" type="button">Login</button>
+            </form>
+        </div>
+    </div>
+    <div id="divInventory" class="card col-6 offset-3 mt-5" style="display:none;">
+        <div class="card-header">
+            <h3>Inventory</h3>
+        </div>
+        <div class="card-body">
+            <form class="col-12">
+                <input id="txtInventoryMake" class="form-control" aria-label="Enter Make of Vehicle" placeholder="Make of Vehicle">
+                <button id="btnInventorySearch" class="btn btn-primary col-12" type="button">Search</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="js/lib/jquery-3.6.1.min.js"></script>
+    <script src="js/lib/bootstrap.bundle.min.js"></script>
+    <script src="js/lib/sweetalert2.js"></script>
+    <script>
+        if(sessionStorage.getItem('SessionID')) {
+            $('#divInventory').slideDown();
+            $('#divLogin').slideUp();
+        }
+        $('#btnLogout').on('click', function() {
+            sessionStorage.removeItem('SessionID');
+            $('#divLogin').slideDown();
+            $('#divInventory').slideUp();
+            $('#txtInventoryMake').val('');
+        })
+        $('#btnInventorySearch').on('click', function() {
+            const strSessionID = sessionStorage.getItem('SessionID');
+            let strMake = $('#txtInventoryMake').val();
+            $.getJSON('https://www.swollenhippo.com/ReliableVehicles/api/inventory.php', {session:strSessionID, make:strMake}).done(function(result) {
+                console.table(result);
+            })
+        })
+
+        $('#btnLogin').on('click', function() {
+            let strEmail = $('#txtEmail').val();
+            let strPassword = $('#txtPassword').val();
+            let blnError = false;
+            let strErrorMessage = '';
+
+            if(!strEmail) {
+                blnError = true;
+                $('txtEmail').addClass('is-invalid');
+            }
+            if(!strPassword) {
+                blnError = true;
+                $('txtPassword').addClass('is-invalid');
+            }
+            if(blnError == false) {
+                $.post('https://www.swollenhippo.com/ReliableVehicles/api/sessions.php', {email:strEmail, password:strPassword}).done(function(result) {
+                    console.log(result);
+                    let objResult = JSON.parse(result);
+                    console.log(objResult);
+                    if(objResult.SessionID) {
+                        $('#txtEmail').val('');
+                        $('#txtPassword').val('');
+                        sessionStorage.setItem("SessionID", objResult.SessionID);
+                        $('#divInventory').slideDown();
+                        $('#divLogin').slideUp();
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oh no',
+                            text: 'Looks like your username or password were incorrect'
+                        })
+                    }
+                })
+            }
+        })
+    </script>
+</body>
+</html>

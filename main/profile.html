@@ -34,15 +34,15 @@
                     </div>
                     <p id="txtJob" class="col-12 text-center"></p>
                 </div>
-
+                
                 <div class="mt-5">
                     <h4>Address</h4>
                     <p id="txtStreetAddress" class="mt-0 mb-0">Street Address</p>
                     <p><span id="txtCity" class="mt-0 mb-0"></span>, <span id="txtState" class="mt-0 mb-0"></span> <span id="txtZIP" class="mt-0 mb-0"></span></p>
-
+                    
                     <h4>Phone</h4>
                     <p id="txtPhoneNumber">Phone Number</p>
-
+                    
                     <h4>Hire Date</h4>
                     <p if="txtHireDate">Hire Date</p>
                 </div>
@@ -62,7 +62,7 @@
                 $('#txtCharacterSelect').append('<option value="' + character.CodeName + '">' + character.FirstName + ' ' + character.LastName + '</option>');
             });
         })
-
+        
         $('#btnFindCharacter').on('click', function(){
             let strCodename = $('#txtCharacterSelect option:selected').val();
             var objCharacter;
@@ -86,28 +86,6 @@
                     $('#imgProfile').attr('alt',objCharacter.FirstName + ' ' + objCharacter.LastName + ' Profile Image');
             });
         })
-
-        /*
-        var objCharacter;
-        $.getJSON('https://swollenhippo.com/getProfileDetailsByAPIKey.php', 
-            {APIKey: 'DuffManSays,Phrasing!',Codename: 'Duchess'}, 
-            (result) => {
-                objCharacter= result;
-                console.log(objCharacter);
-                $('#txtOrgName').text(objCharacter.Agency);
-                $('#txtFirstName').text(objCharacter.FirstName);
-                $('#txtLastName').text(objCharacter.LastName);
-                $('#txtStreetAddress').text(objCharacter.Street1);
-                $('#txtCity').text(objCharacter.City);
-                $('#txtState').text(objCharacter.State);
-                $('#txtZIP').text(objCharacter.ZIP);
-                $('#txtPhoneNumber').text(objCharacter.Phone);
-                $('#txtHireDate').text(objCharacter.HireDate);
-                $('#txtJob').text(objCharacter.Job);
-                $('#imgProfile').attr('src',objCharacter.Image);
-                $('#imgProfile').attr('alt',objCharacter.FirstName + ' ' + objCharacter.LastName + ' Profile Image');
-        });
-        */
     </script>
 </body>
 </html>
