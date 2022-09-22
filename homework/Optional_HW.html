@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New User</title>
-    <link rel="stylesheet" href="css/lib/bootstrap.min.css">
+    <title>Reliable Vehicles</title>
+    <link rel="stylesheet" href="css/lib/bootstrap.min.css"> <!--css/lib/pulse.css-->
 </head>
 
 <body class="bg-primary vh-100">
@@ -97,6 +97,32 @@
                 })
             }
         })
+        /* sessions.php endpoint has been updated to include 3 additional functions:    HERE~~~~~~~
+        
+        When passed a _ request w/ SessionID parameter, webservice will return a JSON object w/ _
+            1.    GET;  the session details
+            2.    PUT;  an Outcome or Error key  (this method updates LastActivity field in database)
+            3. DELETE;  an Outcome or Error key  (this method deletes the passed session)    */
+        
+        // PUT & DELETE AJAX requests
+        $.ajax({
+            type: "PUT",
+            contentType: "application/json; charset=utf-8",
+            url: "https://swollenhippo.com/ReliableVehicles/api/sessions.php",
+            data: { sessionID: "ac96b6a9-722b-4561-b0be-3977d0a98f24" },
+            success: function (result) {
+                console.log(result);
+            }
+        });
+        $.ajax({
+            type: "DELETE",
+            contentType: "application/json; charset=utf-8",
+            url: "https://swollenhippo.com/ReliableVehicles/api/sessions.php",
+            data: { sessionID: "ac96b6a9-722b-4561-b0be-3977d0a98f24" },
+            success: function (result) {
+                console.log(result);
+            }
+        });
     </script>
 </body>
 </html>

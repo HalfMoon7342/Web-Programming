@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en"> <!--TAG ORDER:  id  class  type  style  aria-label  placeholder-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reliable Vehicles</title>
+    <link rel="stylesheet" href="css/lib/bootstrap.min.css"> <!-- css/lib/pulse.css ? -->
+</head>
+
+<body class="bg-primary vh-100">
+    <div id="divLogin" class="row" style="display:none;">
+        <div id="divLogin" class="d-flex flex-md-row col-12">
+
+            <div class="bg-white col-6 d-none d-md-block">
+                <div class="text-center vh-100">
+                    <h3 class="text-primary mt-5">Where Customers Become Family</h3>
+                    <div>
+                        <img id="imgLogo" src="images/hippo.png" alt="logo" class="mw-100">
+                    </div>
+                    <p>Reliable Vehicles is home to the best values in the Upper Cumberland for new and used quality transportation.</p>
+                </div>
+            </div>
+            
+            <div class="align-self-center col-md-5 col-sm-10">
+                <div class="card offset-3">
+                    <div class="card-header">
+                        <div class="d-flex col-12 justify-content-center">
+                            <h3>Login</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <form class="must-validate">
+                            <div class="">
+                                <input id="txtEmail" class="form-control" type="email" aria-label="Enter Email Address" placeholder="Email Address" required>
+                                <div class="invalid-feedback">You Must Enter an Email</div>
+                            </div>
+                            <div class="">
+                                <input id="txtPassword" class="form-control mt-3" type="password" aria-label="Enter Password" placeholder="Password" required>
+                                <div class="invalid-feedback">You Must Enter a Password</div>
+                            </div>
+                            
+                            <button id="btnLogin" class="btn btn-primary col-12 mt-3" type="button">Login</button>
+                            <button id="btnRegisterAccount" class="btn btn-dark col-12 mt-1" type="button">Register Account</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="divNewAccount" class="row" style="display:none;">
+        <div id="divNewAccount" class="d-flex flex-md-row col-12">
+
+            <div class="align-self-center col-md-5 col-sm-10">
+                <div class="card offset-3">
+                    <div class="card-header">
+                        <div class="d-flex col-12 justify-content-center">
+                            <h3>Create Account</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <form class="col-12 must-validate">
+                            <div class="">
+                                <input id="txtEmail" class="form-control" type="email" aria-label="Enter Email Address" placeholder="Email Address" required>
+                                <div class="invalid-feedback">You Must Enter an Email</div>
+                            </div>
+                            <div class="">
+                                <input id="txtFirstName" class="form-control mt-3" type="password" aria-label="Enter First Name" placeholder="First Name" required>
+                                <div class="invalid-feedback">You Must Enter Your First Name</div>
+                            </div>
+                            <div class="">
+                                <input id="txtLastName" class="form-control mt-3" type="password" aria-label="Enter Last Name" placeholder="Last Name" required>
+                                <div class="invalid-feedback">You Must Enter Your Last Name</div>
+                            </div>
+                            <div class="">
+                                <input id="txtPassword" class="form-control mt-3" type="password" aria-label="Enter Password" placeholder="Password" required>
+                                <div class="invalid-feedback">You Must Enter a Password</div>
+                            </div>
+                            
+                            <button id="btnCreateAccount" class="btn btn-primary col-12 mt-3" type="button">Create Account</button>
+                            <button id="btnCancel" class="btn btn-dark col-12 mt-1" type="button">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white col-6 d-none d-md-block">
+                <div class="text-center vh-100">
+                    <h3 class="text-primary mt-5">Account Registration</h3>
+                    <div>
+                        <img id="imgLogo" src="images/hippo.png" alt="logo" class="mw-100">
+                    </div>
+                    <p>Thank you for registering with us. After registration you will be able to view our inventory, schedule an appointment, and make an order.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="divInventory" class="d-flex align-items-center vh-100" style="display:none;">
+        <div id="divInventory" class="card col-6 offset-3 mt-5">
+            <div class="card-header">
+                <div class="d-flex col-12 justify-content-between">
+                    <h3>Search Our Inventory</h3>
+                    <button id="btnLogout" class="btn btn-warning" type="button">Logout</button> <!-- type="button" ?~~~~~~~ -->
+                </div>
+            </div>
+            
+            <div class="card-body">
+                <form class="col-12">
+                    <input id="txtInventoryMake" class="form-control" aria-label="Enter Make of Vehicle" placeholder="Make of Vehicle">
+                    <button id="btnInventorySearch" class="btn btn-primary col-12 mt-3" type="button">Search</button>
+                    <button id="btnInventoryClear" class="btn btn-dark col-12 mt-1" type="button">Clear</button>
+                </form>
+                <table id="tblInventory" class="table mt-5">
+                    <thead>
+                        <tr><th>Make</th><th>Model</th><th>Year</th><th>Mileage</th><th>Stock Number</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/lib/jquery-3.6.1.min.js"></script>
+    <script src="js/lib/bootstrap.bundle.min.js"></script>
+    <script src="js/lib/sweetalert2.js"></script>
+
+    <script> /* ERROR: not properly swaping btwn divLogin, divNewAccount, & divInventory ~~~~~~~ */
+        //swap divLogin/or/divNewAccount for divInventory after login
+        if(sessionStorage.getItem('SessionID')) {
+            $('#divInventory').slideDown();
+            $('#divLogin').slideUp();
+        }
+        //swap divLogin for divNewAccount on click of btnRegisterAccount
+        $('#btnRegisterAccount').on('click', function() {
+            $('#divNewAccount').slideDown();
+            $('#divLogin').slideUp();
+        })
+        //swap divNewAccount for divLogin on click of btnCancel
+        $('#btnCancel').on('click', function() {
+            $('#divLogin').slideDown();
+            $('#divNewAccount').slideUp();
+        })
+        //swap divInventory for divLogin on click of btnLogout
+        $('#btnLogout').on('click', function() {
+            sessionStorage.removeItem('SessionID');
+            $('#divLogin').slideDown();
+            $('#divInventory').slideUp();
+            $('#txtInventoryMake').val('');
+            //clear tblInventory tbody? ~~~~~~~
+        })
+        
+        //create table on click of btnInventorySearch
+        $('#btnInventorySearch').on('click', function() {
+            const strSessionID = sessionStorage.getItem('SessionID');
+            let strMake = $('#txtInventoryMake').val();
+            $.getJSON('https://www.swollenhippo.com/ReliableVehicles/api/inventory.php', {session:strSessionID, make:strMake}).done(function(result) {
+                console.table(result);
+                
+                result.forEach(function(objResult) {
+                    let strTableRow = '<tr><td>' + objResult.Make + '</td><td>' + objResult.Model + '</td><td>' + objResult.Year + '</td><td>' + objResult.Mileage + '</td><td>' + objResult.StockNumber + '</td></td>';
+                    $('#tblInventory tbody').append(strTableRow);
+                })
+            })
+        })
+        
+        //validate sessionID on click of btnLogin
+        $('#btnLogin').on('click', function() {
+            let strEmail = $('#txtEmail').val();
+            let strPassword = $('#txtPassword').val();
+            let blnError = false;
+            let strErrorMessage = '';
+            
+            if(!strEmail) {
+                blnError = true;
+                $('txtEmail').addClass('is-invalid');
+            }
+            if(!strPassword) {
+                blnError = true;
+                $('txtPassword').addClass('is-invalid');
+            }
+            if(blnError == false) {
+                $.post('https://www.swollenhippo.com/ReliableVehicles/api/sessions.php', {email:strEmail, password:strPassword}).done(function(result) {
+                    console.log(result);
+                    let objResult = JSON.parse(result);
+                    console.log(objResult);
+                    
+                    if(objResult.SessionID) {
+                        $('#txtEmail').val('');
+                        $('#txtPassword').val('');
+                        sessionStorage.setItem("SessionID", objResult.SessionID);
+                        $('#divInventory').slideDown();
+                        $('#divLogin').slideUp();
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oh no',
+                            text: 'Looks like your username or password were incorrect'
+                        })
+                    }
+                })
+            }
+        })
+    </script>
+</body>
+</html>
