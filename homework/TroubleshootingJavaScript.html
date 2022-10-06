@@ -1,0 +1,112 @@
+<!DOCTYPE html>  <!-- Homework 5 (9/29/2022) -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework 5</title>
+</head>
+
+<body>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script>
+        // Code Segment #1 of 8
+        function addTwoNumbers(intOne, intTwo) {
+            if(!intOne && !intTwo) {
+                return 0;
+                if(intOne) {
+                    if(intTwo) { /* added ) */
+                        return intOne + intTwo;
+                    } else {
+                        return intOne;
+                    } /* removed ) */
+                }
+            } /* separated 2 } onto different lines */
+            return intTwo;
+        }
+        
+        // Code Segment #2 of 8
+        $('#cboEmployeeType').change(function() {
+            if($('#cboEmployeeType').val() == 'FULL') {
+                $('#divHours').slideUp(); /* removed / */
+                //$('#divHours').css('display','none');
+                $('#divHours').addClass('d-none');
+            } else {
+                $('#divHours').removeClass('d-none').slideDown;
+            }
+        })
+        
+        // Code Segment #3 of 8
+        function buildEmployeeCard() {
+            $.each(arrEmployees, function(i, person) {
+                if(person.FirstName != 'John') {
+                    let strHTML;
+                    strHTML += '<div class="card col-6 offset-3 mt-5">'; /* properly indented */
+                    strHTML += '<h3 class="text-center"><a href="mailto:' + person.Email + '">' + person.FirstName + ' ' + person.LastName + '</a></h3>';
+                    strHTML += '<h4 class="text-center">' + person.Postion +'</h4>';
+                    strHTML += '<h4 class="mt-3">Profile Details</h4>';
+                    strHTML += '<p>Hourly Rate: ' + person.HourlyRate + '</p>';
+                    strHTML += '<p>Address:  586 Southern Lane, Cookeville, TN 38506</p>';
+                    strHTML += '<p>Assignment:  Clement Hall</p>';
+                    strHTML += '<div class="form-group">';
+                    strHTML += '<label for="txtPayRate">Pay Rate</label>';
+                    strHTML += '<input id="txtPayRate">';
+                    strHTML += '</div>';
+                    strHTML += '</div>';
+                    $('body').append(strHTML);
+                }
+            });
+        } /* added } */
+        
+        // Code Segment #4 of 8
+        var arrEmployees;
+        $.getJSON("https://www.swollenhippo.com/getEmployeesByAPIKey.php?APIKey=Mickey2021!", function(result) { /* removed ) after url */
+            console.log(result);
+            arremployees = result;
+            buildEmployeeCard();
+            $.each(result, function(i, person) {
+                console.log(Person.FirstName);
+                console.log(person.FirstName + ' ' + person.LastName);
+                $('#txtEmail').val(person.Email);
+            }); /* added ); */
+        }); /* added ; */
+        
+        // Code Segment #5 of 8
+        $(document).on('click','#btnHideWelcome', function() {
+            $('#divWelcome').slideToggle();
+            $('#divData').slideToggle(); /* added ) after '' & ( after function */
+            $('#btnViews').slideToggle(); /* added () after function */
+        }); /* added ; */
+        
+        // Code Segment #6 of 8
+        $(document).on('click','.btnCalculate', function() {
+            let decWage = $(this).closest('.card').find('.spanRate').text();
+            let decTax = $(this).closest('.card').find('.spanTax').text();
+            let decGoal = $(this).closest('card').find('.txtGoal').val();
+            let decTaxedWage = decWage * (1.00 - decTax); /* added ) */
+            let decHours = decGoal/decTaxedWage;
+            if(decHours > 40) {
+                decGoal = decGoal - (40 * (decWage * (1.00 - decTax)));
+                decHours = decGoal/((decWage * (1.00 - decTax)*1.5));
+                decHours += 40;
+            } /* added } */
+            $(this).closest('.card').find('.spanHours').text(Math.round((decHours + Number.EPSILON) * 100) / 100);
+        }); /* added ; */
+        
+        // Code Segment #7 of 8
+        function buildEmployeeTableRow(Employee) {
+            return '<tr><td>' + Employee.FirstName + '</td><td> + Employee.LastName' + '</td><td>' + Employee.Title + '</td><td>' + calculateTotalPay(Employee.HourlyWage, employee.Hours, Employee.TaxRate) + '</td></tr>'; /* added ' before + and ' before </td></tr>'; */
+        }
+        
+        // Code Segment #8 of 8
+        function calculateTotalPay(decPayRate, decHours, decTaxRate) {
+            decOverTime = 0.00;
+            if(decHours > 40) { /* added ) after if condition */
+                decOvertime = dechours - 40;
+                decHours = 40;
+            }
+            return Math.round(((((decHours * decPayRate) + (decOverTime * decPayRate * 1.5)) * (1- decTaxRate)) + Number.EPSILON) * 100) / 100;
+        }
+    </script>
+</body>
+</html>

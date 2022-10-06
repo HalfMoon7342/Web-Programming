@@ -1,0 +1,55 @@
+<!DOCTYPE html>     <!-- 9/27/2022 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width", initial-scale="1.0">
+    <title>Function Test</title>
+</head>
+
+<body>
+    <!--DevTools Console
+        addTwoNumbers(_, _);
+        checkEmail('_');
+        functionName('_', '_');
+    -->
+    
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script>
+        function addTwoNumbers(intOne, intTwo) {
+            if(!intOne && !intTwo) {
+                return 0;
+            }
+            if(intOne) {
+                if(intTwo) {
+                    return (intOne + intTwo);
+                } else {
+                    return intOne;
+                }
+            }
+            return intTwo;
+        }
+        
+        function checkEmail(strEmail) {
+            if(!strEmail.includes('@')) {
+                return false;
+            }
+            if(!strEmail.includes('.')) {
+                return false;
+            }
+            if(strEmail.length < 6) {
+                return false;
+            }
+            return true;
+        }
+        
+        function functionName(strFirstName, strLastName) {
+            if(strFirstName && strLastName) {
+                return (strFirstName + ' ' + strLastName);
+            }
+            return null;
+        }
+        
+    </script>
+</body>
+</html>
